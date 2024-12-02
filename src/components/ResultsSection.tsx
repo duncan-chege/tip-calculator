@@ -1,6 +1,6 @@
 const ResultsSection = () => {
     return (
-        <div className="bg-very-dark-cyan p-8 h-full rounded-xl ml-8 flex flex-col">
+        <div className="bg-very-dark-cyan p-8 h-full rounded-xl flex flex-col flex-wrap">
             <div className="grid grid-cols-2 gap-2">
                 <div>
                     <p className="text-white">Tip Amount</p>
