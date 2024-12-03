@@ -1,6 +1,26 @@
 import ResultsSection from "./ResultsSection";
+import { useState } from "react";
 
 const EntrySection = () => {
+  const [values, setValues] = useState({
+    people: "",
+    bill: ""
+  })
+  
+  const [valid, setValid] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = () => {
+    console.log("Form submitted with values:", values);
+  }
+
   return (
     <div className="bg-white xl:w-1/2 lg:w-2/3 md:w-4/5 w-full py-10 px-8 rounded-2xl text-sm flex md:flex-nowrap flex-wrap gap-8">
       <div className="md:w-1/2 w-full">
@@ -13,6 +33,9 @@ const EntrySection = () => {
             type="number"
             className="bg-[url('./assets/icon-dollar.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
             min="0"
+            name="bill"
+            value={values.bill}
+            onChange={handleInputChange}
           />
         </div>
         <div className="mt-8">
@@ -45,19 +68,22 @@ const EntrySection = () => {
           </div>
         </div>
         <div className="mt-8">
-          <label htmlFor="bill" className="text-very-dark-cyan">
+          <label htmlFor="people" className="text-very-dark-cyan">
             Number of People
           </label>
           <br />
           <input
             type="number"
             className="bg-[url('./assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
+            name="people"
             min="0"
+            value={values.people}
+            onChange={handleInputChange}
           />
         </div>
       </div>
       <div className="md:w-1/2 w-full">
-        <ResultsSection />
+        <ResultsSection onReset={handleSubmit}/>
       </div>
     </div>
   );
