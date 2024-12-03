@@ -21,7 +21,7 @@ const ResultsSection = () => {
                 </div>
             </div>
 
-            <button className="rounded-md mt-auto bg-strong-cyan w-full py-2 text-very-dark-cyan font-bold">RESET</button>
+            <button className="rounded-md mt-auto bg-strong-cyan hover:bg-teal-200 w-full py-2 text-very-dark-cyan font-bold">RESET</button>
         </div>
     )
 }

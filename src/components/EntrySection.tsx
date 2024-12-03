@@ -21,19 +21,19 @@ const EntrySection = () => {
           </label>
           <br />
           <div className="mt-4 grid grid-cols-3 gap-3">
-            <button className="bg-very-dark-cyan text-white py-1 px-6 rounded text-lg font-semibold">
+            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
               5%
             </button>
-            <button className="bg-very-dark-cyan text-white py-1 px-6 rounded text-lg font-semibold">
+            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
               10%
             </button>
-            <button className="bg-very-dark-cyan text-white py-1 px-6 rounded text-lg font-semibold">
+            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
               15%
             </button>
-            <button className="bg-very-dark-cyan text-white py-1 px-6 rounded text-lg font-semibold">
+            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
               25%
             </button>
-            <button className="bg-very-dark-cyan text-white py-1 px-6 rounded text-lg font-semibold">
+            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
               50%
             </button>
             <input
