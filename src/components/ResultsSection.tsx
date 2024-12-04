@@ -1,3 +1,4 @@
+// This defines the shape of the props that the ResultsSection component expects to receive.
 interface ResultsSectionProps {
     onReset: () => void;
 }

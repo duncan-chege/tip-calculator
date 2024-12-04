@@ -7,15 +7,37 @@ const EntrySection = () => {
     bill: "",
   });
 
+  const [tipPerPerson, setTipPerPerson] = useState<number|null>(null);
+
+  const [totalPerson, setTotalPerson] = useState<number|null>(null);
+
   const [submitted, setSubmitted] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // The name attribute is used to dynamically determine which part of the values object to update.
     const { name, value } = e.target;
     setValues((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
+  
+  const handleCalculateTip = (tipPercentage: number) => {
+    const bill = parseFloat(values.bill);
+    const people = parseInt(values.people, 10);
+
+    if (!isNaN(bill) && !isNaN(people) && people > 0){
+      const totalTip = (bill * tipPercentage) / 100;
+      const tipPerPerson = totalTip / people;
+      const totalPerson = totalTip + (bill / people);
+
+      setTipPerPerson(tipPerPerson);
+      setTotalPerson(totalPerson);
+    } else {
+      setTipPerPerson(null);
+      setTotalPerson(null);
+    }
+  }
 
   const handleSubmit = () => {
     console.log("Form submitted with values:", values);
@@ -54,7 +76,8 @@ const EntrySection = () => {
           </label>
           <br />
           <div className="mt-4 grid grid-cols-3 gap-3">
-            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
+            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold"
+            onClick={() => handleCalculateTip(5)}>
               5%
             </button>
             <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
