@@ -80,6 +80,7 @@ const EntrySection = () => {
             className="rounded bg-[url('../public/assets/icon-dollar.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
             min="0"
             name="bill"
+            id="bill"
             value={values.bill}
             onChange={handleInputChange}
           />
@@ -128,6 +129,7 @@ const EntrySection = () => {
                 : "rounded bg-[url('../public/assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
             }
             name="people"
+            id="people"
             min="0"
             value={values.people}
             onChange={handleInputChange}
