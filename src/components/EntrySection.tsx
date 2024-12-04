@@ -87,7 +87,7 @@ const EntrySection = () => {
         </div>
         <div className="mt-8">
           <label htmlFor="bill" className="text-very-dark-cyan">
-            Select Tip %
+            Select Tip - X %
           </label>
           <br />
           <div className="mt-4 grid grid-cols-3 gap-3">
