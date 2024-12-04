@@ -5,6 +5,7 @@ const EntrySection = () => {
   const [values, setValues] = useState({
     people: "",
     bill: "",
+    customPercent: "",
   });
 
   const [tipPerPerson, setTipPerPerson] = useState<number | null>(null);
@@ -22,10 +23,13 @@ const EntrySection = () => {
     }));
   };
 
-  const handleCalculateTip = (tipPercentage: number) => {
-    const bill = parseFloat(values.bill);
-    const people = parseInt(values.people, 10);
+  const tipPercentageList = [5, 10, 15, 25, 50] as const;
 
+  const bill = parseFloat(values.bill);
+  const people = parseInt(values.people, 10);
+  const customPercent = parseFloat(values.customPercent);
+
+  const handleCalculateTip = (tipPercentage: number) => {
     if (!isNaN(bill) && !isNaN(people) && people > 0) {
       const totalTip = (bill * tipPercentage) / 100;
       const tipPerPerson = totalTip / people;
@@ -39,12 +43,22 @@ const EntrySection = () => {
     }
   };
 
-  const tipPercentageList = [5, 10, 15, 25, 50] as const;
+  const handleCustomPercentTip = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !isNaN(customPercent)) {
+        const totalTip = (bill * customPercent) / 100;
+        const tipPerPerson = totalTip / people;
+        const totalPerson = totalTip + bill / people;
+  
+        setTipPerPerson(tipPerPerson);
+        setTotalPerson(totalPerson);
+    }
+  }
 
   const handleReset = () => {
     setValues({
       people: "",
       bill: "",
+      customPercent: "",
     });
 
     setTipPerPerson(null);
@@ -88,7 +102,11 @@ const EntrySection = () => {
               className="rounded p-2 bg-very-light-grayish-cyan outline-0 text-right"
               type="number"
               placeholder="Custom %"
-              min="0"
+              name="customPercent"
+              value={values.customPercent}
+              onChange={handleInputChange}
+              onKeyDown={handleCustomPercentTip}
+              min="1"
             />
           </div>
         </div>
