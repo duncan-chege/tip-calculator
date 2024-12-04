@@ -1,9 +1,16 @@
 // This defines the shape of the props that the ResultsSection component expects to receive.
+// Every prop passed to a component must be defined in its props interface for TypeScript to accept it.
 interface ResultsSectionProps {
-    onReset: () => void;
+  onReset: () => void;
+  tipPerPerson: number | null;
+  totalPerson: number | null;
 }
 
-const ResultsSection: React.FC<ResultsSectionProps> = ({onReset}) => {
+const ResultsSection: React.FC<ResultsSectionProps> = ({
+  onReset,
+  tipPerPerson,
+  totalPerson,
+}) => {
   return (
     <div className="bg-very-dark-cyan p-8 h-full rounded-xl flex flex-col flex-wrap">
       <div className="grid grid-cols-2 gap-2">
@@ -13,7 +20,7 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({onReset}) => {
         </div>
         <div>
           <p className="text-strong-cyan text-3xl text-right font-bold">
-            $4.27
+            ${tipPerPerson?.toFixed(2)}
           </p>
         </div>
       </div>
@@ -25,7 +32,7 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({onReset}) => {
         </div>
         <div>
           <p className="text-strong-cyan text-3xl text-right font-bold">
-            $32.79
+            ${totalPerson?.toFixed(2)}
           </p>
         </div>
       </div>

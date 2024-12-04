@@ -7,9 +7,9 @@ const EntrySection = () => {
     bill: "",
   });
 
-  const [tipPerPerson, setTipPerPerson] = useState<number|null>(null);
+  const [tipPerPerson, setTipPerPerson] = useState<number | null>(null);
 
-  const [totalPerson, setTotalPerson] = useState<number|null>(null);
+  const [totalPerson, setTotalPerson] = useState<number | null>(null);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -21,15 +21,15 @@ const EntrySection = () => {
       [name]: value,
     }));
   };
-  
+
   const handleCalculateTip = (tipPercentage: number) => {
     const bill = parseFloat(values.bill);
     const people = parseInt(values.people, 10);
 
-    if (!isNaN(bill) && !isNaN(people) && people > 0){
+    if (!isNaN(bill) && !isNaN(people) && people > 0) {
       const totalTip = (bill * tipPercentage) / 100;
       const tipPerPerson = totalTip / people;
-      const totalPerson = totalTip + (bill / people);
+      const totalPerson = totalTip + bill / people;
 
       setTipPerPerson(tipPerPerson);
       setTotalPerson(totalPerson);
@@ -37,12 +37,19 @@ const EntrySection = () => {
       setTipPerPerson(null);
       setTotalPerson(null);
     }
-  }
+  };
 
   const tipPercentageList = [5, 10, 15, 25, 50] as const;
 
-  const handleSubmit = () => {
-    console.log("Form submitted with values:", values);
+  const handleReset = () => {
+    setValues({
+      people: "",
+      bill: "",
+    });
+
+    setTipPerPerson(null);
+    setTotalPerson(null);
+
     setSubmitted(true);
   };
 
@@ -53,19 +60,10 @@ const EntrySection = () => {
           <label htmlFor="bill" className="text-very-dark-cyan">
             Bill
           </label>
-          {submitted && values.bill == "" && (
-            <span className="absolute right-0 text-red-700 text-xs font-semibold">
-              Enter your bill
-            </span>
-          )}
           <br />
           <input
             type="number"
-            className={
-              submitted && values.bill == ""
-                ? "border-2 border-red-700 rounded bg-[url('./assets/icon-dollar.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
-                : "rounded bg-[url('./assets/icon-dollar.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
-            }
+            className="rounded bg-[url('./assets/icon-dollar.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
             min="0"
             name="bill"
             value={values.bill}
@@ -78,14 +76,14 @@ const EntrySection = () => {
           </label>
           <br />
           <div className="mt-4 grid grid-cols-3 gap-3">
-          
-            { tipPercentageList.map((item) => (
-                <button key={item} className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold"
+            {tipPercentageList.map((item) => (
+              <button
+                key={item}
+                className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold"
                 onClick={() => handleCalculateTip(item)}>
                 {item}%
-                </button>
+              </button>
             ))}
-
             <input
               className="rounded p-2 bg-very-light-grayish-cyan outline-0 text-right"
               type="number"
@@ -98,20 +96,19 @@ const EntrySection = () => {
           <label htmlFor="people" className="text-very-dark-cyan">
             Number of People
           </label>
-          {(submitted && values.people == "" && (
+          {submitted && values.people == "0" && (
             <span className="absolute right-0 text-red-700 text-xs font-semibold">
-              Enter number of people
+              Can't be zero
             </span>
-          )) ||
-            (submitted && values.people == "0" && (
-              <span className="absolute right-0 text-red-700 text-xs font-semibold">
-                Can't be zero
-              </span>
-            ))}
+          )}
           <br />
           <input
             type="number"
-            className="bg-[url('./assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
+            className={
+              submitted && values.people == "0"
+                ? "border-2 border-red-700 rounded bg-[url('./assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
+                : "rounded bg-[url('./assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
+            }
             name="people"
             min="0"
             value={values.people}
@@ -120,7 +117,11 @@ const EntrySection = () => {
         </div>
       </div>
       <div className="md:w-1/2 w-full">
-        <ResultsSection onReset={handleSubmit} />
+        <ResultsSection
+          onReset={handleReset}
+          tipPerPerson={tipPerPerson}
+          totalPerson={totalPerson}
+        />
       </div>
     </div>
   );
