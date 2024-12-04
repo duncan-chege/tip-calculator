@@ -39,6 +39,8 @@ const EntrySection = () => {
     }
   }
 
+  const tipPercentageList = [5, 10, 15, 25, 50] as const;
+
   const handleSubmit = () => {
     console.log("Form submitted with values:", values);
     setSubmitted(true);
@@ -76,22 +78,14 @@ const EntrySection = () => {
           </label>
           <br />
           <div className="mt-4 grid grid-cols-3 gap-3">
-            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold"
-            onClick={() => handleCalculateTip(5)}>
-              5%
-            </button>
-            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
-              10%
-            </button>
-            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
-              15%
-            </button>
-            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
-              25%
-            </button>
-            <button className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold">
-              50%
-            </button>
+          
+            { tipPercentageList.map((item) => (
+                <button key={item} className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold"
+                onClick={() => handleCalculateTip(item)}>
+                {item}%
+                </button>
+            ))}
+
             <input
               className="rounded p-2 bg-very-light-grayish-cyan outline-0 text-right"
               type="number"
