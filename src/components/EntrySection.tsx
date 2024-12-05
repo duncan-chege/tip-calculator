@@ -3,8 +3,8 @@ import { useState } from "react";
 
 const EntrySection = () => {
   const [values, setValues] = useState({
-    people: "",
     bill: "",
+    people: "",
     customPercent: "",
   });
 
@@ -17,10 +17,13 @@ const EntrySection = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // The name attribute is used to dynamically determine which part of the values object to update.
     const { name, value } = e.target;
-    setValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    
+    if (/^\d*\.?\d*$/.test(value)) {
+      setValues((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const tipPercentageList = [5, 10, 15, 25, 50] as const;
@@ -75,9 +78,8 @@ const EntrySection = () => {
         </label>
         <br />
         <input
-          type="number"
+          type="text"
           className="rounded bg-[url('../public/assets/icon-dollar.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
-          min="0"
           name="bill"
           id="bill"
           value={values.bill}
@@ -94,7 +96,7 @@ const EntrySection = () => {
           )}
           <br />
           <input
-            type="number"
+            type="text"
             className={
               submitted && values.people == "0"
                 ? "border-2 border-red-700 rounded bg-[url('./assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
@@ -102,7 +104,6 @@ const EntrySection = () => {
             }
             name="people"
             id="people"
-            min="0"
             value={values.people}
             onChange={handleInputChange}
           />
