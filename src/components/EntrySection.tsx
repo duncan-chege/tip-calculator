@@ -8,6 +8,12 @@ const EntrySection = () => {
     customPercent: "",
   });
 
+  const tipPercentageList = [5, 10, 15, 25, 50] as const;
+
+  const [percentValue, setPercentValue] = useState<
+    (typeof tipPercentageList)[number] | null
+  >(null);
+
   const [tipPerPerson, setTipPerPerson] = useState<number | null>(null);
 
   const [totalPerson, setTotalPerson] = useState<number | null>(null);
@@ -17,7 +23,7 @@ const EntrySection = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // The name attribute is used to dynamically determine which part of the values object to update.
     const { name, value } = e.target;
-    
+
     if (/^\d*\.?\d*$/.test(value)) {
       setValues((prev) => ({
         ...prev,
@@ -25,8 +31,6 @@ const EntrySection = () => {
       }));
     }
   };
-
-  const tipPercentageList = [5, 10, 15, 25, 50] as const;
 
   const bill = parseFloat(values.bill);
   const people = parseInt(values.people, 10);
@@ -117,8 +121,10 @@ const EntrySection = () => {
             {tipPercentageList.map((item) => (
               <button
                 key={item}
-                className="bg-very-dark-cyan hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold"
-                onClick={() => handleCalculateTip(item)}>
+                className={`hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold ${
+                  percentValue === item ? `bg-strong-cyan` : `bg-very-dark-cyan`
+                }`}
+                onClick={() => setPercentValue(item)}>
                 {item}%
               </button>
             ))}
