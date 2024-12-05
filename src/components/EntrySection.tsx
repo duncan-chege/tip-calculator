@@ -45,14 +45,14 @@ const EntrySection = () => {
 
   const handleCustomPercentTip = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !isNaN(customPercent)) {
-        const totalTip = (bill * customPercent) / 100;
-        const tipPerPerson = totalTip / people;
-        const totalPerson = totalTip + bill / people;
-  
-        setTipPerPerson(tipPerPerson);
-        setTotalPerson(totalPerson);
+      const totalTip = (bill * customPercent) / 100;
+      const tipPerPerson = totalTip / people;
+      const totalPerson = totalTip + bill / people;
+
+      setTipPerPerson(tipPerPerson);
+      setTotalPerson(totalPerson);
     }
-  }
+  };
 
   const handleReset = () => {
     setValues({
@@ -70,18 +70,40 @@ const EntrySection = () => {
   return (
     <div className="bg-white xl:w-1/2 lg:w-2/3 md:w-4/5 w-full py-10 px-8 rounded-2xl text-sm flex md:flex-nowrap flex-wrap gap-8">
       <div className="md:w-1/2 w-full">
-        <div className="relative">
-          <label htmlFor="bill" className="text-very-dark-cyan">
-            Bill
+        <label htmlFor="bill" className="text-very-dark-cyan">
+          Bill
+        </label>
+        <br />
+        <input
+          type="number"
+          className="rounded bg-[url('../public/assets/icon-dollar.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
+          min="0"
+          name="bill"
+          id="bill"
+          value={values.bill}
+          onChange={handleInputChange}
+        />
+        <div className="mt-8 relative">
+          <label htmlFor="people" className="text-very-dark-cyan">
+            Number of People
           </label>
+          {submitted && values.people == "0" && (
+            <span className="absolute right-0 text-red-700 text-xs font-semibold">
+              Can't be zero
+            </span>
+          )}
           <br />
           <input
             type="number"
-            className="rounded bg-[url('../public/assets/icon-dollar.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
+            className={
+              submitted && values.people == "0"
+                ? "border-2 border-red-700 rounded bg-[url('./assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
+                : "rounded bg-[url('../public/assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
+            }
+            name="people"
+            id="people"
             min="0"
-            name="bill"
-            id="bill"
-            value={values.bill}
+            value={values.people}
             onChange={handleInputChange}
           />
         </div>
@@ -110,30 +132,6 @@ const EntrySection = () => {
               min="1"
             />
           </div>
-        </div>
-        <div className="mt-8 relative">
-          <label htmlFor="people" className="text-very-dark-cyan">
-            Number of People
-          </label>
-          {submitted && values.people == "0" && (
-            <span className="absolute right-0 text-red-700 text-xs font-semibold">
-              Can't be zero
-            </span>
-          )}
-          <br />
-          <input
-            type="number"
-            className={
-              submitted && values.people == "0"
-                ? "border-2 border-red-700 rounded bg-[url('./assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
-                : "rounded bg-[url('../public/assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
-            }
-            name="people"
-            id="people"
-            min="0"
-            value={values.people}
-            onChange={handleInputChange}
-          />
         </div>
       </div>
       <div className="md:w-1/2 w-full">
