@@ -38,7 +38,7 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({
       </div>
 
       <button
-        className="rounded-md mt-auto bg-strong-cyan hover:bg-teal-200 w-full py-2 text-very-dark-cyan font-bold"
+        className="rounded-md md:mt-auto mt-8 bg-strong-cyan hover:bg-teal-200 w-full py-2 text-very-dark-cyan font-bold"
         onClick={onReset}>
         RESET
       </button>
