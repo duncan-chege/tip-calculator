@@ -146,6 +146,8 @@ const EntrySection = () => {
           onReset={handleReset}
           tipPerPerson={tipPerPerson}
           totalPerson={totalPerson}
+          handleCalculateTip={handleCalculateTip}
+          percentValue={percentValue}
         />
       </div>
     </div>
