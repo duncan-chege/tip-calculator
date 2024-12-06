@@ -37,27 +37,21 @@ const EntrySection = () => {
   const customPercent = parseFloat(values.customPercent);
 
   const handleCalculateTip = (tipPercentage: number) => {
-    if (!isNaN(bill) && !isNaN(people) && people > 0) {
-      const totalTip = (bill * tipPercentage) / 100;
+    const percentage =
+      !isNaN(customPercent) && customPercent > 0
+        ? customPercent // Use custom percent if provided
+        : tipPercentage; // Otherwise, use the button-provided percentage
+
+    if (percentage && !isNaN(bill) && !isNaN(people) && people > 0) {
+      const totalTip = (bill * percentage) / 100;
       const tipPerPerson = totalTip / people;
       const totalPerson = totalTip + bill / people;
 
       setTipPerPerson(tipPerPerson);
       setTotalPerson(totalPerson);
-    } else {
+    }  else {
       setTipPerPerson(null);
       setTotalPerson(null);
-    }
-  };
-
-  const handleCustomPercentTip = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !isNaN(customPercent)) {
-      const totalTip = (bill * customPercent) / 100;
-      const tipPerPerson = totalTip / people;
-      const totalPerson = totalTip + bill / people;
-
-      setTipPerPerson(tipPerPerson);
-      setTotalPerson(totalPerson);
     }
   };
 
@@ -130,13 +124,11 @@ const EntrySection = () => {
             ))}
             <input
               className="rounded p-2 bg-very-light-grayish-cyan outline-0 text-right"
-              type="number"
+              type="text"
               placeholder="Custom %"
               name="customPercent"
               value={values.customPercent}
               onChange={handleInputChange}
-              onKeyDown={handleCustomPercentTip}
-              min="1"
             />
           </div>
         </div>
