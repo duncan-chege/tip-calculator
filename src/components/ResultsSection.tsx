@@ -4,7 +4,7 @@ interface ResultsSectionProps {
   onReset: () => void;
   tipPerPerson: number | null;
   totalPerson: number | null;
-  handleCalculateTip: (tipPercentage:number) => void;
+  handleCalculateTip: (tipPercentage:number | null) => void;
   percentValue: number | null;
 }
 
@@ -44,7 +44,7 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({
       <div className="flex flex-row space-x-4 md:mt-auto mt-8">
         <button
           className="rounded-md bg-white hover:bg-teal-200 py-2 basis-1/2 text-very-dark-cyan font-bold"
-          onClick={() => percentValue !== null && handleCalculateTip(percentValue) }>
+          onClick={() => handleCalculateTip(percentValue) }>
           CALCULATE
         </button>
         <button

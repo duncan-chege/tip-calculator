@@ -16,7 +16,7 @@ const EntrySection = () => {
 
   const [percentValue, setPercentValue] = useState<
     (typeof tipPercentageList)[number] | null
-  >(null);
+  >(null); // Track percentage value for both buttons and input
 
   const [tipPerPerson, setTipPerPerson] = useState<number | null>(null);
 
@@ -24,15 +24,13 @@ const EntrySection = () => {
 
   const [submitted, setSubmitted] = useState(false);
 
+  // When input changes, calculate directly with input and reset percentValue
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // The name attribute is used to dynamically determine which part of the values object to update.
     const { name, value } = e.target;
 
     if (/^\d*\.?\d*$/.test(value)) {
-      setValues((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      setValues({ ...values, [name]:value });
     }
   };
 
@@ -40,11 +38,8 @@ const EntrySection = () => {
   const people = parseInt(values.people, 10);
   const customPercent = parseFloat(values.customPercent);
 
-  const handleCalculateTip = (tipPercentage: number) => {
-    const percentage =
-      !isNaN(customPercent) && customPercent > 0
-        ? customPercent // Use custom percent if provided
-        : tipPercentage; // Otherwise, use the button-provided percentage
+  const handleCalculateTip = () => {
+    const percentage = !isNaN(customPercent) && customPercent > 0 ? customPercent : percentValue // Use custom percent if valid, otherwise button value
 
     if (percentage && !isNaN(bill) && !isNaN(people) && people > 0) {
       const totalTip = (bill * percentage) / 100;
@@ -127,6 +122,7 @@ const EntrySection = () => {
                 onClick={() => {
                   setPercentValue(item);
                   setActiveField("button"); // Mark button as active
+                  setValues({ ...values, customPercent: ""}) // Clear custom input when button is clicked
                 }}>
                 {item}%
               </button>
