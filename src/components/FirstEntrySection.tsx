@@ -1,4 +1,4 @@
-import ResultsSection from "./FirstResultsSection";
+import FirstResultsSection from "./FirstResultsSection";
 import { useState } from "react";
 
 const EntrySection = () => {
@@ -14,7 +14,7 @@ const EntrySection = () => {
 
   const tipPercentageList = [5, 10, 15, 25, 50] as const;
 
-  const [percentValue, setPercentValue] = useState<
+  const [percentButtonValue, setpercentButtonValue] = useState<
     (typeof tipPercentageList)[number] | null
   >(null); // Track percentage value for both buttons and input
 
@@ -22,14 +22,11 @@ const EntrySection = () => {
 
   const [totalPerson, setTotalPerson] = useState<number | null>(null);
 
-  const [submitted, setSubmitted] = useState(false);
-
-  // When input changes, calculate directly with input and reset percentValue
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // The name attribute is used to dynamically determine which part of the values object to update.
     const { name, value } = e.target;
 
-    if (/^\d*\.?\d*$/.test(value)) {
+    if (/^\d*$/.test(value)) {
       setValues({ ...values, [name]:value });
     }
   };
@@ -39,7 +36,7 @@ const EntrySection = () => {
   const customPercent = parseFloat(values.customPercent);
 
   const handleCalculateTip = () => {
-    const percentage = !isNaN(customPercent) && customPercent > 0 ? customPercent : percentValue // Use custom percent if valid, otherwise button value
+    const percentage = !isNaN(customPercent) && customPercent > 0 ? customPercent : percentButtonValue // Use custom percent if valid, otherwise button value
 
     if (percentage && !isNaN(bill) && !isNaN(people) && people > 0) {
       const totalTip = (bill * percentage) / 100;
@@ -63,8 +60,6 @@ const EntrySection = () => {
 
     setTipPerPerson(null);
     setTotalPerson(null);
-
-    setSubmitted(true);
   };
 
   return (
@@ -86,7 +81,7 @@ const EntrySection = () => {
           <label htmlFor="people" className="text-very-dark-cyan">
             Number of People
           </label>
-          {submitted && values.people == "0" && (
+          {values.people === "0" && (
             <span className="absolute right-0 text-red-700 text-xs font-semibold">
               Can't be zero
             </span>
@@ -95,7 +90,7 @@ const EntrySection = () => {
           <input
             type="text"
             className={
-              submitted && values.people == "0"
+              values.people === "0"
                 ? "border-2 border-red-700 rounded bg-[url('./assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
                 : "rounded bg-[url('../public/assets/icon-person.svg')] bg-no-repeat bg-[1rem_center] bg-auto w-full border-0 p-2 bg-very-light-grayish-cyan outline-0 mt-2 text-right"
             }
@@ -115,12 +110,12 @@ const EntrySection = () => {
               <button
                 key={item}
                 className={`hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold ${
-                  percentValue === item && activeField === "button"
+                  percentButtonValue === item && activeField === "button"
                     ? `bg-strong-cyan`
                     : `bg-very-dark-cyan`
                 }`}
                 onClick={() => {
-                  setPercentValue(item);
+                  setpercentButtonValue(item);
                   setActiveField("button"); // Mark button as active
                   setValues({ ...values, customPercent: ""}) // Clear custom input when button is clicked
                 }}>
@@ -147,12 +142,12 @@ const EntrySection = () => {
         </div>
       </div>
       <div className="md:w-1/2 w-full">
-        <ResultsSection
+        <FirstResultsSection
           onReset={handleReset}
           tipPerPerson={tipPerPerson}
           totalPerson={totalPerson}
           handleCalculateTip={handleCalculateTip}
-          percentValue={percentValue}
+          percentButtonValue={percentButtonValue}
         />
       </div>
     </div>
