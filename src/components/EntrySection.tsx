@@ -8,6 +8,10 @@ const EntrySection = () => {
     customPercent: "",
   });
 
+  const [activeField, setActiveField] = useState<"button" | "input" | null>(
+    null
+  );
+
   const tipPercentageList = [5, 10, 15, 25, 50] as const;
 
   const [percentValue, setPercentValue] = useState<
@@ -49,7 +53,7 @@ const EntrySection = () => {
 
       setTipPerPerson(tipPerPerson);
       setTotalPerson(totalPerson);
-    }  else {
+    } else {
       setTipPerPerson(null);
       setTotalPerson(null);
     }
@@ -81,7 +85,7 @@ const EntrySection = () => {
           name="bill"
           id="bill"
           value={values.bill}
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e)}
         />
         <div className="mt-8 relative">
           <label htmlFor="people" className="text-very-dark-cyan">
@@ -103,7 +107,7 @@ const EntrySection = () => {
             name="people"
             id="people"
             value={values.people}
-            onChange={handleInputChange}
+            onChange={(e) => handleInputChange(e)}
           />
         </div>
         <div className="mt-8">
@@ -116,19 +120,32 @@ const EntrySection = () => {
               <button
                 key={item}
                 className={`hover:bg-strong-cyan text-white py-1 px-6 rounded text-lg font-semibold ${
-                  percentValue === item ? `bg-strong-cyan` : `bg-very-dark-cyan`
+                  percentValue === item && activeField === "button"
+                    ? `bg-strong-cyan`
+                    : `bg-very-dark-cyan`
                 }`}
-                onClick={() => setPercentValue(item)}>
+                onClick={() => {
+                  setPercentValue(item);
+                  setActiveField("button"); // Mark button as active
+                }}>
                 {item}%
               </button>
             ))}
             <input
-              className="rounded p-2 bg-very-light-grayish-cyan outline-0 text-right"
+              className={`${
+                activeField === "input"
+                  ? `border-2 border-strong-cyan`
+                  : `border-inherit`
+              } rounded p-2 bg-very-light-grayish-cyan outline-0 text-right`}
               type="text"
               placeholder="Custom %"
               name="customPercent"
               value={values.customPercent}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                handleInputChange(e);
+                setActiveField("input");
+              }}
+              onFocus={()=> setActiveField("input")}
             />
           </div>
         </div>
