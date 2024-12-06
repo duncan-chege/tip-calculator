@@ -1,4 +1,4 @@
-import ResultsSection from "./ResultsSection";
+import ResultsSection from "./FirstResultsSection";
 import { useState } from "react";
 
 const EntrySection = () => {
