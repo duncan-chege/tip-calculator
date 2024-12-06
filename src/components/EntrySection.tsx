@@ -68,7 +68,7 @@ const EntrySection = () => {
   };
 
   return (
-    <div className="bg-white xl:w-1/2 lg:w-2/3 md:w-4/5 w-full py-10 px-8 rounded-2xl text-sm flex md:flex-nowrap flex-wrap gap-8">
+    <div className="bg-white max-w-3xl py-10 px-8 md:mx-8 rounded-2xl text-sm flex md:flex-nowrap flex-wrap gap-8">
       <div className="md:w-1/2 w-full">
         <label htmlFor="bill" className="text-very-dark-cyan">
           Bill
