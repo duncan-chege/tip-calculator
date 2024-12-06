@@ -21,7 +21,7 @@ function App() {
               : "bg-very-dark-cyan/40"
           } text-white p-2 px-4 rounded-md`}
           onClick={() => setSelectedVersion("first")}>
-          Version 1
+          Option 1
         </button>
         <button
           className={` ${
@@ -30,7 +30,7 @@ function App() {
               : "bg-very-dark-cyan/40"
           } text-white p-2 px-4 rounded-md`}
           onClick={() => setSelectedVersion("second")}>
-          Version 2
+          Option 2
         </button>
       </div>
 

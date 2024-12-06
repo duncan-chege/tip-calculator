@@ -4,6 +4,7 @@ This app lets you calculate the amount of tips and total bill to be paid per per
 ## A user should:
 
 - Calculate the correct tip and total cost of the bill per person by clicking the tip button or entering a custom tip value
+- Switch between 2 options of tip calculation
 - View the optimal layout for the app depending on their device's screen size
 - See hover states for all interactive elements on the page
 ## Tech Stack
