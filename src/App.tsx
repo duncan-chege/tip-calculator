@@ -3,7 +3,9 @@ import FirstEntrySection from "./components/FirstEntrySection";
 import SecondEntrySection from "./components/SecondEntrySection";
 
 function App() {
-  const [selectedVersion, setSelectedVersion] = useState(FirstEntrySection);
+  const [selectedVersion, setSelectedVersion] = useState<"first" | "second">(
+    "first"
+  );
 
   return (
     <main className="flex flex-col justify-center items-center gap-8 bg-light-grayish-cyan min-h-screen">
@@ -12,16 +14,28 @@ function App() {
       </h1>
 
       <div className="flex max-w-3xl justify-evenly w-full">
-        <button className="bg-very-dark-cyan text-white p-2 px-4 rounded-md">
+        <button
+          className={`${
+            selectedVersion === "first"
+              ? "bg-very-dark-cyan"
+              : "bg-very-dark-cyan/40"
+          } text-white p-2 px-4 rounded-md`}
+          onClick={() => setSelectedVersion("first")}>
           Version 1
         </button>
-        <button className="bg-very-dark-cyan/40 text-white p-2 px-4 rounded-md">
+        <button
+          className={` ${
+            selectedVersion === "second"
+              ? "bg-very-dark-cyan"
+              : "bg-very-dark-cyan/40"
+          } text-white p-2 px-4 rounded-md`}
+          onClick={() => setSelectedVersion("second")}>
           Version 2
         </button>
       </div>
 
-      <FirstEntrySection />
-      <SecondEntrySection />
+      {selectedVersion === "first" && <FirstEntrySection />}
+      {selectedVersion === "second" && <SecondEntrySection />}
     </main>
   );
 }

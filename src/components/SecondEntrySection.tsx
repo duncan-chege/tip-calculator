@@ -1,4 +1,4 @@
-import SecondResultsSection from "./FirstResultsSection";
+import SecondResultsSection from "./SecondResultsSection";
 import { useState } from "react";
 
 const SecondEntrySection = () => {
@@ -26,17 +26,21 @@ const SecondEntrySection = () => {
     // The name attribute is used to dynamically determine which part of the values object to update.
     const { name, value } = e.target;
 
-    if (/^\d*$/.test(value)) {
+    if (/^\d*$/.test(value)) {  // Validate numeric output
       setValues({ ...values, [name]:value });
+
+      if (name === "customPercent"){    // Dynamically update tips if customPercent changes
+        const customPercent = parseFloat(value);
+        handleCalculateTip(customPercent);  // Only pass the custom percent
+      }
     }
   };
 
-  const bill = parseFloat(values.bill);
-  const people = parseInt(values.people, 10);
-  const customPercent = parseFloat(values.customPercent);
+  const handleCalculateTip = (customPercent: number) => {
+    const bill = parseFloat(values.bill);
+    const people = parseInt(values.people, 10);
 
-  const handleCalculateTip = () => {
-    const percentage = !isNaN(customPercent) && customPercent > 0 ? customPercent : percentButtonValue // Use custom percent if valid, otherwise button value
+    const percentage = customPercent > 0 ? customPercent : percentButtonValue // Use custom percent if valid, otherwise button value
 
     if (percentage && !isNaN(bill) && !isNaN(people) && people > 0) {
       const totalTip = (bill * percentage) / 100;
@@ -118,6 +122,7 @@ const SecondEntrySection = () => {
                   setpercentButtonValue(item);
                   setActiveField("button"); // Mark button as active
                   setValues({ ...values, customPercent: ""}) // Clear custom input when button is clicked
+                  handleCalculateTip(item)
                 }}>
                 {item}%
               </button>
@@ -146,8 +151,6 @@ const SecondEntrySection = () => {
           onReset={handleReset}
           tipPerPerson={tipPerPerson}
           totalPerson={totalPerson}
-          handleCalculateTip={handleCalculateTip}
-          percentButtonValue={percentButtonValue}
         />
       </div>
     </div>
