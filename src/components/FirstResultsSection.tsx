@@ -8,7 +8,7 @@ interface ResultsSectionProps {
   percentButtonValue: number | null;
 }
 
-const ResultsSection: React.FC<ResultsSectionProps> = ({
+const FirstResultsSection: React.FC<ResultsSectionProps> = ({
   onReset,
   tipPerPerson,
   totalPerson,
@@ -57,4 +57,4 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({
   );
 };
 
-export default ResultsSection;
+export default FirstResultsSection;

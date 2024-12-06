@@ -1,7 +1,7 @@
-import FirstResultsSection from "./FirstResultsSection";
+import SecondResultsSection from "./FirstResultsSection";
 import { useState } from "react";
 
-const FirstEntrySection = () => {
+const SecondEntrySection = () => {
   const [values, setValues] = useState({
     bill: "",
     people: "",
@@ -142,7 +142,7 @@ const FirstEntrySection = () => {
         </div>
       </div>
       <div className="md:w-1/2 w-full">
-        <FirstResultsSection
+        <SecondResultsSection
           onReset={handleReset}
           tipPerPerson={tipPerPerson}
           totalPerson={totalPerson}
@@ -154,4 +154,4 @@ const FirstEntrySection = () => {
   );
 };
 
-export default FirstEntrySection;
+export default SecondEntrySection;
